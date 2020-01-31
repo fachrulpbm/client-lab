@@ -22,6 +22,7 @@ public class Browser extends StackPane {
     public WebEngine webEngine = webView.getEngine();
     final String urlAwal = "http://lab.ti/user/log_penggunaan_lab/auth/index/" + getMacAdress();
     final String urlAwal2 = "http://lab.ti/user/log_penggunaan_lab/auth/login";
+    final String urlAwal3 = "http://lab.ti/user/log_penggunaan_lab/log_penggunaan/create?q";
     String urlSekarang;
 
     public Browser(Stage stage) {
@@ -37,7 +38,7 @@ public class Browser extends StackPane {
                     /* get url yang sekarang */
                     urlSekarang = webView.getEngine().getLocation();
                     /* Kalau url masih sama dengan kondisi awal -> belum login */
-                    if (urlSekarang.equalsIgnoreCase(urlAwal) || urlSekarang.equalsIgnoreCase(urlAwal2)) {
+                    if (urlSekarang.equalsIgnoreCase(urlAwal) || urlSekarang.equalsIgnoreCase(urlAwal2) || urlSekarang.equalsIgnoreCase(urlAwal3)) {
                         stage.setAlwaysOnTop(true);
                         stage.setMaximized(true);
                         stage.toFront();
