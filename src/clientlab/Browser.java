@@ -1,9 +1,12 @@
 package clientlab;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker;
@@ -23,6 +26,9 @@ public class Browser extends StackPane {
     final String urlAwal = "http://lab.ti/user/log_penggunaan_lab/auth/index/" + getMacAdress();
     final String urlAwal2 = "http://lab.ti/user/log_penggunaan_lab/auth/login";
     final String urlAwal3 = "http://lab.ti/user/log_penggunaan_lab/log_penggunaan/create?q";
+    final String urlAwal4 = "http://lab.ti/user/log_penggunaan_lab/log_penggunaan/create_action";
+    final String urlShutdown = "http://lab.ti/shutdown";
+    
     String urlSekarang;
 
     public Browser(Stage stage) {
@@ -38,10 +44,16 @@ public class Browser extends StackPane {
                     /* get url yang sekarang */
                     urlSekarang = webView.getEngine().getLocation();
                     /* Kalau url masih sama dengan kondisi awal -> belum login */
-                    if (urlSekarang.equalsIgnoreCase(urlAwal) || urlSekarang.equalsIgnoreCase(urlAwal2) || urlSekarang.equalsIgnoreCase(urlAwal3)) {
+                    if (urlSekarang.equalsIgnoreCase(urlAwal) || urlSekarang.equalsIgnoreCase(urlAwal2) || urlSekarang.equalsIgnoreCase(urlAwal3) || urlSekarang.equalsIgnoreCase(urlAwal4)) {
                         stage.setAlwaysOnTop(true);
                         stage.setMaximized(true);
                         stage.toFront();
+                    } else if(urlSekarang.equalsIgnoreCase(urlShutdown)){
+                        try {
+                            shutdown();
+                        } catch (RuntimeException | IOException ex) {
+                            Logger.getLogger(Browser.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     } else {
                         stage.setAlwaysOnTop(false);
                         stage.setMaximized(false);
@@ -68,5 +80,21 @@ public class Browser extends StackPane {
         }
         return sb.toString();
     }
+    
+    public static void shutdown() throws RuntimeException, IOException {
+        String shutdownCommand;
+        String operatingSystem = System.getProperty("os.name");
+        if ("Linux".equalsIgnoreCase(operatingSystem) || "Mac OS X".equalsIgnoreCase(operatingSystem)) {
+            shutdownCommand = "shutdown -h now";
+        }
+        else if ("Windows".equalsIgnoreCase(operatingSystem)) {
+            shutdownCommand = "shutdown.exe -s -t 0";
+        }
+        else {
+            throw new RuntimeException("Unsupported operating system.");
+        }
+        Runtime.getRuntime().exec(shutdownCommand);
+        System.exit(0);
+    } 
 
 }
