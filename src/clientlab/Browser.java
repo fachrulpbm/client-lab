@@ -27,7 +27,7 @@ public class Browser extends StackPane {
     final String urlAwal2 = "http://lab.ti/user/log_penggunaan_lab/auth/login";
     final String urlAwal3 = "http://lab.ti/user/log_penggunaan_lab/log_penggunaan/create?q";
     final String urlAwal4 = "http://lab.ti/user/log_penggunaan_lab/log_penggunaan/create_action";
-    final String urlShutdown = "http://lab.ti/shutdown";
+    final String urlShutdown = "http://lab.ti/user/log_penggunaan_lab/auth/shutdown";
     
     String urlSekarang;
 
@@ -84,10 +84,10 @@ public class Browser extends StackPane {
     public static void shutdown() throws RuntimeException, IOException {
         String shutdownCommand;
         String operatingSystem = System.getProperty("os.name");
-        if ("Linux".equalsIgnoreCase(operatingSystem) || "Mac OS X".equalsIgnoreCase(operatingSystem)) {
+        if (operatingSystem.equalsIgnoreCase("lin") || operatingSystem.equalsIgnoreCase("mac")) {
             shutdownCommand = "shutdown -h now";
         }
-        else if ("Windows".equalsIgnoreCase(operatingSystem)) {
+        else if (operatingSystem.equalsIgnoreCase("win")) {
             shutdownCommand = "shutdown.exe -s -t 0";
         }
         else {
