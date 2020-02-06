@@ -84,10 +84,10 @@ public class Browser extends StackPane {
     public static void shutdown() throws RuntimeException, IOException {
         String shutdownCommand;
         String operatingSystem = System.getProperty("os.name");
-        if (operatingSystem.equalsIgnoreCase("lin") || operatingSystem.equalsIgnoreCase("mac")) {
+        if (operatingSystem.startsWith("lin") || operatingSystem.startsWith("mac")) {
             shutdownCommand = "shutdown -h now";
         }
-        else if (operatingSystem.equalsIgnoreCase("win")) {
+        else if (operatingSystem.startsWith("win")) {
             shutdownCommand = "shutdown.exe -s -t 0";
         }
         else {
