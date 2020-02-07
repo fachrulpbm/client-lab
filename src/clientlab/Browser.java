@@ -23,11 +23,11 @@ public class Browser extends StackPane {
 
     WebView webView = new WebView();
     public WebEngine webEngine = webView.getEngine();
-    final String urlAwal = "http://lab.ti/user/log_penggunaan_lab/auth/index/" + getMacAdress();
-    final String urlAwal2 = "http://lab.ti/user/log_penggunaan_lab/auth/login";
-    final String urlAwal3 = "http://lab.ti/user/log_penggunaan_lab/log_penggunaan/create?q";
-    final String urlAwal4 = "http://lab.ti/user/log_penggunaan_lab/log_penggunaan/create_action";
-    final String urlShutdown = "http://lab.ti/user/log_penggunaan_lab/auth/shutdown";
+    final String urlAwal = "http://172.31.100.253/user/log_penggunaan_lab/auth/index/" + getMacAdress();
+    final String urlAwal2 = "http://172.31.100.253/user/log_penggunaan_lab/auth/login";
+    final String urlAwal3 = "http://172.31.100.253/user/log_penggunaan_lab/log_penggunaan/create?q";
+    final String urlAwal4 = "http://172.31.100.253/user/log_penggunaan_lab/log_penggunaan/create_action";
+    final String urlShutdown = "http://172.31.100.253/user/log_penggunaan_lab/auth/shutdown";
     
     String urlSekarang;
 
@@ -84,10 +84,10 @@ public class Browser extends StackPane {
     public static void shutdown() throws RuntimeException, IOException {
         String shutdownCommand;
         String operatingSystem = System.getProperty("os.name");
-        if (operatingSystem.startsWith("lin") || operatingSystem.startsWith("mac")) {
+        if (operatingSystem.startsWith("Lin") || operatingSystem.startsWith("Mac")) {
             shutdownCommand = "shutdown -h now";
         }
-        else if (operatingSystem.startsWith("win")) {
+        else if (operatingSystem.startsWith("Win")) {
             shutdownCommand = "shutdown.exe -s -t 0";
         }
         else {

@@ -5,6 +5,8 @@ import static javafx.application.Application.launch;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
@@ -32,9 +34,13 @@ public class FormLab extends Application {
         Stage secondStage = new Stage();
         secondStage.initOwner(firstStage);
         secondStage.initStyle(StageStyle.UNDECORATED);
+        
         Scene scene = new Scene(new Browser(secondStage), 1024, 800);
         secondStage.setScene(scene);
         secondStage.setMaximized(true);
+        
+        secondStage.setFullScreen(true);
+        
         secondStage.setAlwaysOnTop(true);
         secondStage.toFront();
         secondStage.show();
@@ -48,6 +54,15 @@ public class FormLab extends Application {
 //                a1.initOwner(secondStage);
 //                a1.show();
                 t.consume();
+            }
+        });
+        
+        secondStage.addEventHandler(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {
+            if (KeyCode.ESCAPE == event.getCode()) {
+                secondStage.setAlwaysOnTop(false);
+                secondStage.setMaximized(false);
+                secondStage.setFullScreen(false);
+                secondStage.toBack(); 
             }
         });
 
